@@ -71,7 +71,6 @@ nav h1 a {
     background-color: #eee;
     font-size: 17px;
     margin: 0;
-    width: calc(50% - 80px);
 }
 
 /* Display list items side by side */
@@ -186,12 +185,13 @@ nav h1 a {
 
 /* ====================== Restaurant Details ====================== */
 .inside header {
-  position: fixed;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 2000;
 }
-.inside #map-container {
+/*.inside #map-container {
   background: blue none repeat scroll 0 0;
   height: 87%;
   position: fixed;
@@ -208,7 +208,7 @@ nav h1 a {
   bottom: 0;
   position: absolute;
   width: 50%;
-}
+}*/
 #restaurant-name {
   color: #f18200;
   font-family: Arial,sans-serif;
@@ -223,29 +223,27 @@ nav h1 a {
 	width: 90%;
 }
 #restaurant-address {
-  font-size: 12pt;
+  font-size: 1.5em;
   margin: 10px 0px;
+}
+#restaurant-hours {
+  margin: 0 auto;
 }
 #restaurant-cuisine {
   background-color: #333;
   color: #ddd;
-  font-size: 12pt;
+  font-size: 1.5em;
   font-weight: 300;
   letter-spacing: 10px;
   margin: 0 0 20px;
   padding: 2px 0;
   text-align: center;
   text-transform: uppercase;
-	width: 90%;
 }
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
-  padding: 140px 40px 30px;
-  width: 50%;
-}
-#reviews-container {
-  padding: 30px 40px 80px;
+  text-align: center;
 }
 #reviews-container h2 {
   color: #f58500;
@@ -260,18 +258,40 @@ nav h1 a {
 }
 #reviews-list li {
   background-color: #fff;
-    border: 2px solid #f3f3f3;
+  border: 2px solid #f3f3f3;
   display: block;
   list-style-type: none;
-  margin: 0 0 30px;
+  margin: 15px;
   overflow: hidden;
-  padding: 0 20px 20px;
   position: relative;
-  width: 85%;
 }
 #reviews-list li p {
+  font-size: 1.5em;
+}
+#reviews-name, #reviews-date {
+  background-color: #252831;
+  padding: 0.5em;
   margin: 0 0 10px;
+}
+#reviews-name {
+  float: left;
+  color: #fff;
+}
+#reviews-date {
+  text-align: right;
+  color: #aaa;
+}
+#reviews-rating {
+  background-color: #f18200;
+  color: #fff;
+  width: 6em;
+  margin: auto; /* Center rating */
+}
+#reviews-comments {
+  padding: 0 20px 20px;
+  margin: 20px 0;
 }
 #restaurant-hours td {
   color: #666;
+  font-size: 1.5em;
 }
