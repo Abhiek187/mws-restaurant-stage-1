@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added
   fetchNeighborhoods();
   fetchCuisines();
-  //registerServiceWorker();
+  registerServiceWorker();
 });
 
-/*registerServiceWorker = () => {
+registerServiceWorker = () => {
   if (!navigator.serviceWorker) return;
 
   navigator.serviceWorker.register('/sw.js').then((reg) => {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }).catch(() => {
     console.log('Registration failed!');
   });
-};*/
+};
 
 /**
  * Fetch all neighborhoods and set their HTML.
