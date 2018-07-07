@@ -1,9 +1,11 @@
+let currentCache = 'rr-v1';
+
 /**
  * Store home page in a cache when initialized.
  */
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open('restaurants').then(cache => {
+    caches.open(currentCache).then(cache => {
       return cache.addAll([
         '/',
         '/restaurant.html',
@@ -19,50 +21,38 @@ self.addEventListener('install', event => {
 });
 
 /**
- * If resource isn't in cache, retrieve from network and save to cache.
+ * Delete the old cache when this is updated.
  */
-/*self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-  console.log(url.origin);
-  console.log(location.origin);
-
-  if (url.origin !== location.origin) {
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request).then((resp1) => {
-      conosle.log('Fetch successful!');
-      return resp1 || fetch(event.request).then((resp2) => {
-        return caches.open('restaurants').then((cache) => {
-          cache.put(event.request, resp2.clone());
-          return resp2;
-        });
-      });
-    }).catch(() => {
-      console.log('Fetch failed!');
-      //return caches.match('/');
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.filter(cacheName => {
+          return cacheName.startsWith('rr-v') && cacheName !== currentCache;
+        }).map(oldCache => {
+          return caches.delete(oldCache);
+        })
+      );
     })
   );
-});*/
+});
 
+/**
+ * If resource isn't in cache, retrieve from the network and save to cache.
+ */
 self.addEventListener('fetch', event => {
-  /*const url = new URL(event.request.url);
-  if (url.origin !== location.origin) return;*/
-
   event.respondWith(
-    caches.match(event.request).then(resp => {
-      console.log('Fetch successful!');
-      return resp || fetch(event.request).then(response => {
-        return caches.open('restaurants').then(cache => {
-          cache.put(event.request, response.clone());
+    caches.match(event.request).then(resp1 => {
+      return resp1 || fetch(event.request).then(resp2 => {
+        const respClone = resp2.clone();
+        caches.open(currentCache).then(cache => {
+          cache.put(event.request, respClone);
         });
 
-        return response;
+        return resp2;
       });
     }).catch(() => {
-      console.log('Fetch failed!');
-      return caches.match('/');
+      return caches.match(event.request);
     })
   );
 });

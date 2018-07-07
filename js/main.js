@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 registerServiceWorker = () => {
   if (!navigator.serviceWorker) return;
 
-  navigator.serviceWorker.register('/sw.js').then((reg) => {
-    console.log('Registration worked! Scope is ' + reg.scope); // scope must be at or above other files
-  }).catch(() => {
-    console.log('Registration failed!');
+  navigator.serviceWorker.register('/sw.js').then(() => {
+    console.log('Registration succeeded.'); // scope must be at or above other files
+  }).catch((error) => {
+    console.log('Registration failed with error ' + error);
   });
 };
 
