@@ -16,7 +16,7 @@ registerServiceWorker = () => {
   if (!navigator.serviceWorker) return;
 
   navigator.serviceWorker.register('/sw.js').then((reg) => {
-    console.log('Registration worked! Scope is ' + reg.scope);
+    console.log('Registration worked! Scope is ' + reg.scope); // scope must be at or above other files
   }).catch(() => {
     console.log('Registration failed!');
   });

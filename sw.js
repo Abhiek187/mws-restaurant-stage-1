@@ -1,9 +1,9 @@
 /**
  * Store home page in a cache when initialized.
  */
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open('restaurants').then((cache) => {
+    caches.open('restaurants').then(cache => {
       return cache.addAll([
         '/',
         '/restaurant.html',
@@ -46,11 +46,20 @@ self.addEventListener('install', (event) => {
   );
 });*/
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
+  /*const url = new URL(event.request.url);
+  if (url.origin !== location.origin) return;*/
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
+    caches.match(event.request).then(resp => {
       console.log('Fetch successful!');
-      return response || fetch(event.request);
+      return resp || fetch(event.request).then(response => {
+        return caches.open('restaurants').then(cache => {
+          cache.put(event.request, response.clone());
+        });
+
+        return response;
+      });
     }).catch(() => {
       console.log('Fetch failed!');
       return caches.match('/');
