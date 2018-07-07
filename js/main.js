@@ -6,10 +6,21 @@ let markers = [];
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  initMap(); // added 
+  initMap(); // added
   fetchNeighborhoods();
   fetchCuisines();
+  //registerServiceWorker();
 });
+
+/*registerServiceWorker = () => {
+  if (!navigator.serviceWorker) return;
+
+  navigator.serviceWorker.register('/sw.js').then((reg) => {
+    console.log('Registration worked! Scope is ' + reg.scope);
+  }).catch(() => {
+    console.log('Registration failed!');
+  });
+};*/
 
 /**
  * Fetch all neighborhoods and set their HTML.
@@ -155,6 +166,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
+  li.id = 'restaurant-info-' + restaurant.id;
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
@@ -177,6 +189,7 @@ createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
+  more.setAttribute('aria-labelledby', 'restaurant-info-' + restaurant.id);
   li.append(more);
 
   return li;
