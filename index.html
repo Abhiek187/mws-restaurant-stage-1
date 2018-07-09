@@ -18,16 +18,17 @@
   </header>
 
   <main id="maincontent">
+    <a href="#neighborhoods-select" class="skip-link">Skip to filters</a>
     <section id="map-container">
-      <div id="map"></div>
+      <div id="map" role="application" aria-label="Map of filtered restaurants"></div>
     </section>
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+        <select id="neighborhoods-select" name="neighborhoods" aria-label="Select neighborhood" onchange="updateRestaurants()">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+        <select id="cuisines-select" name="cuisines" aria-label="Select cuisine" onchange="updateRestaurants()">
           <option value="all">All Cuisines</option>
         </select>
       </div>

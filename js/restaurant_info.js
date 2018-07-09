@@ -16,6 +16,8 @@ initMap = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {
+      const map = document.getElementById('map');
+      map.setAttribute('aria-label', 'Map of ' + restaurant.name);
       self.newMap = L.map('map', {
         center: [restaurant.latlng.lat, restaurant.latlng.lng],
         zoom: 16,
@@ -89,7 +91,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.alt = restaurant.name;
+  image.alt = 'Image of ' + restaurant.name;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -127,7 +129,8 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h2');
+  const title = document.createElement('h3'); // has less importance than page title or restaurant name
+  title.tabIndex = 0;
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
@@ -149,6 +152,8 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+  li.id = 'reviews-item';
+  li.tabIndex = 0;
   const name = document.createElement('p');
   name.id = 'reviews-name';
   name.innerHTML = review.name;
